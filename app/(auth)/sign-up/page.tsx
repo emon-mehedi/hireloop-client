@@ -6,6 +6,7 @@ import { Briefcase, Eye, EyeOff, Lock, Mail, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { authClient } from "@/lib/auth-client"
 
 type SignUpValues = {
   name: string
@@ -20,7 +21,7 @@ const SignUpPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
@@ -40,7 +41,10 @@ const SignUpPage = () => {
     setError(null)
 
     // TODO: Call authClient.signUp.email({ name, email, password }) once auth is wired up.
-    console.log("Sign up form data:", values)
+
+    
+    const { data, error: err } = await authClient.signUp.email({...values,callbackURL: "/"});
+    console.log("Sign up form data:", data, err)
   }
 
   return (
