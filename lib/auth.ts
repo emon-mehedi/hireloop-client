@@ -11,15 +11,16 @@ export const auth = betterAuth({
     enabled: true,
   },
 
-  //additional fields added
+  // additional fields
   user: {
-       additionalFields: {
-          role: {
-              type: ['seeker', 'recruiter', 'admin'],
-              input: false
-            } 
-        }
+    additionalFields: {
+      role: {
+        type: ["seeker", "recruiter", "admin"],
+        input: true,
+        defaultValue: "seeker",
+      },
     },
+  },
   database: mongodbAdapter(db, {
     client,
   }),

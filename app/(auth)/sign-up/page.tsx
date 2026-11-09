@@ -2,17 +2,34 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Briefcase, Eye, EyeOff, Lock, Mail, User } from "lucide-react"
+import {
+  Briefcase,
+  Eye,
+  EyeOff,
+  Lock,
+  Mail,
+  ShieldCheck,
+  User,
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
+
+const ROLE_OPTIONS = [
+  { value: "seeker", label: "Job seeker", icon: User },
+  { value: "recruiter", label: "Recruiter", icon: Briefcase },
+  { value: "admin", label: "Admin", icon: ShieldCheck },
+] as const
+
+type Role = (typeof ROLE_OPTIONS)[number]["value"]
 
 type SignUpValues = {
   name: string
   email: string
   password: string
   confirmPassword: string
+  role: Role
   acceptedTerms: boolean
 }
 
@@ -20,8 +37,9 @@ const SignUpPage = () => {
   const [showPassword, setShowPassword] = React.useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
+  const [formError, setFormError] = React.useState<string | null>(null)
 
-  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
@@ -30,6 +48,7 @@ const SignUpPage = () => {
       email: String(formData.get("email") ?? ""),
       password: String(formData.get("password") ?? ""),
       confirmPassword: String(formData.get("confirmPassword") ?? ""),
+      role: String(formData.get("role") ?? "seeker") as Role,
       acceptedTerms: formData.get("terms") === "on",
     }
 
@@ -39,12 +58,20 @@ const SignUpPage = () => {
     }
 
     setError(null)
+    setFormError(null)
 
-    // TODO: Call authClient.signUp.email({ name, email, password }) once auth is wired up.
+    const {data, error: signUpError } = await authClient.signUp.email({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      role: values.role,
+      callbackURL: '/'
+    })
 
-    
-    const { data, error: err } = await authClient.signUp.email({...values,callbackURL: "/"});
-    console.log("Sign up form data:", data, err)
+    if (signUpError) {
+      setFormError(signUpError.message ?? "Could not create your account.")
+    }
+    console.log("sign up data",data,signUpError );
   }
 
   return (
@@ -65,7 +92,10 @@ const SignUpPage = () => {
 
       <form
         onSubmit={handleSubmit}
-        onChange={() => error && setError(null)}
+        onChange={() => {
+          setError(null)
+          setFormError(null)
+        }}
         className="space-y-4"
       >
         <div className="space-y-1.5">
@@ -103,6 +133,27 @@ const SignUpPage = () => {
             />
           </div>
         </div>
+
+        <fieldset className="space-y-1.5">
+          <legend className="text-sm font-medium">I am a</legend>
+          <div className="grid grid-cols-3 gap-2">
+            {ROLE_OPTIONS.map((option) => (
+              <label key={option.value} className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="role"
+                  value={option.value}
+                  defaultChecked={option.value === "seeker"}
+                  className="peer sr-only"
+                />
+                <span className="flex flex-col items-center gap-1.5 rounded-lg border border-input bg-transparent px-2 py-3 text-center text-xs font-medium text-muted-foreground transition-colors peer-checked:border-indigo-600 peer-checked:bg-indigo-600/10 peer-checked:text-foreground peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50 hover:bg-muted">
+                  <option.icon className="size-4" aria-hidden />
+                  {option.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
 
         <div className="space-y-1.5">
           <label htmlFor="password" className="text-sm font-medium">
@@ -198,6 +249,12 @@ const SignUpPage = () => {
             .
           </span>
         </label>
+
+        {formError ? (
+          <p role="alert" className="text-sm text-destructive">
+            {formError}
+          </p>
+        ) : null}
 
         <Button type="submit" size="lg" className="w-full">
           Create account
