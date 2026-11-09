@@ -6,6 +6,7 @@ import { Briefcase, Eye, EyeOff, Lock, Mail } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { authClient } from "@/lib/auth-client"
 
 type SignInValues = {
   email: string
@@ -16,7 +17,7 @@ type SignInValues = {
 const SignInPage = () => {
   const [showPassword, setShowPassword] = React.useState(false)
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
@@ -27,7 +28,13 @@ const SignInPage = () => {
     }
 
     // TODO: Call authClient.signIn.email({ email, password }) once auth is wired up.
-    console.log("Sign in form data:", values)
+    const { data, error } = await authClient.signIn.email({
+        ...values,
+        callbackURL: "/",
+}, {
+    //callbacks
+})
+    console.log("Sign in form data:", data, error)
   }
 
   return (
