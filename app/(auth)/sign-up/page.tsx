@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
 
 const ROLE_OPTIONS = [
   { value: "seeker", label: "Job seeker", icon: User },
@@ -34,6 +35,7 @@ type SignUpValues = {
 }
 
 const SignUpPage = () => {
+  const router = useRouter()
   const [showPassword, setShowPassword] = React.useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
@@ -69,9 +71,13 @@ const SignUpPage = () => {
     })
 
     if (signUpError) {
-      setFormError(signUpError.message ?? "Could not create your account.")
+      setFormError(signUpError.message ?? "Could not create your account.");
+      console.log("sign up error", signUpError);
+    } else {
+      router.refresh();
+      router.push("/")
+      console.log("sign up data",data);
     }
-    console.log("sign up data",data,signUpError );
   }
 
   return (

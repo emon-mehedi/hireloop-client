@@ -9,6 +9,7 @@ import { Menu, X } from "lucide-react"
 import logo from "@/public/images/logo.png"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { signOut, useSession } from "@/lib/auth-client"
 
 const NAV_ITEMS = [
   { label: "Browse Jobs", href: "/jobs" },
@@ -23,8 +24,12 @@ function isActive(pathname: string, href: string) {
 export function Navbar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
-  const closeMenu = () => setIsOpen(false)
+  const closeMenu = () => setIsOpen(false);
+  const { data: session } = useSession()
 
+  const handleSignOut = async () => {
+    await signOut()
+  }
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
@@ -58,20 +63,29 @@ export function Navbar() {
 
         {/* Desktop auth actions */}
         <div className="hidden items-center gap-2 md:flex">
-          <Link
-            href="/sign-in"
-            className={cn(
-              "inline-flex h-8 items-center justify-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground",
-              isActive(pathname, "/sign-in")
-                ? "text-foreground"
-                : "text-muted-foreground"
-            )}
-          >
-            Sign In
-          </Link>
-          <Button nativeButton={false} render={<Link href="/sign-up" />}>
-            Get Started
-          </Button>
+          {
+            session?.user
+              ? <>
+                <span>Welcome {session.user.name}</span>
+                <Button onClick={handleSignOut}>Sign Out</Button>
+              </>
+              : <>
+                <Link
+                  href="/sign-in"
+                  className={cn(
+                    "inline-flex h-8 items-center justify-center rounded-lg px-3 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground",
+                    isActive(pathname, "/sign-in")
+                      ? "text-foreground"
+                      : "text-muted-foreground"
+                  )}
+                >
+                  Sign In
+                </Link>
+                <Button nativeButton={false} render={<Link href="/sign-up" />}>
+                  Get Started
+                </Button>
+              </>
+          }
         </div>
 
         {/* Mobile menu toggle */}
@@ -112,20 +126,30 @@ export function Navbar() {
             ))}
 
             <div className="mt-3 flex flex-col gap-2 border-t pt-3">
-              <Link
-                href="/sign-in"
-                onClick={closeMenu}
-                className="inline-flex h-9 items-center justify-center rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                Sign In
-              </Link>
-              <Button
-                nativeButton={false}
-                render={<Link href="/sign-up" onClick={closeMenu} />}
-                className="w-full"
-              >
-                Get Started
-              </Button>
+              {
+                session?.user
+                  ? <>
+                    <span>Welcome {session.user.name}</span>
+                    <Button onClick={handleSignOut}>Sign Out</Button>
+                  </>
+                  : <>
+                    <Link
+                      href="/sign-in"
+                      onClick={closeMenu}
+                      className="inline-flex h-9 items-center justify-center rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    >
+                      Sign In
+                    </Link>
+                    <Button
+                      nativeButton={false}
+                      render={<Link href="/sign-up" onClick={closeMenu} />}
+                      className="w-full"
+                    >
+                      Get Started
+                    </Button>
+                  </>
+              }
+
             </div>
           </nav>
         </div>
