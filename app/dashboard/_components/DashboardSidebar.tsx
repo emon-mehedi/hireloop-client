@@ -17,7 +17,7 @@ const menuItemsByRole = {
     {id: "dashboard", name:"Dashboard", url: "/dashboard/seeker", icon: LayoutDashboard},
     {id: "jobs", name:"Jobs", url:"/dashboard/seeker/jobs", icon:Briefcase},
     {id: "saved-jobs", name:"Saved Jobs", url:"/dashboard/seeker/saved-jobs", icon:Bookmark},
-    {id: "applications", name:"Applications", url:"/dashboard/seeker/saved-jobs", icon:FileText},
+    {id: "applications", name:"Applications", url:"/dashboard/seeker/applications", icon:FileText},
     {id: "settings", name: "Settings", url: "/dashboard/seeker/settings", icon:Settings}
   ],
   recruiter: [
