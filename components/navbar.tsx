@@ -11,11 +11,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { signOut, useSession } from "@/lib/auth-client"
 
-const NAV_ITEMS = [
-  { label: "Browse Jobs", href: "/jobs" },
-  { label: "Companies", href: "/companies" },
-  { label: "Pricing", href: "/pricing" },
-] as const
+
 
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`)
@@ -26,6 +22,13 @@ export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
   const closeMenu = () => setIsOpen(false);
   const { data: session } = useSession()
+
+  const NAV_ITEMS = [
+    { label: "Browse Jobs", href: "/jobs" },
+    { label: "Companies", href: "/companies" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Dashboard", href: `/dashboard/${session?.user.role}` }
+  ] as const
 
   const handleSignOut = async () => {
     await signOut()

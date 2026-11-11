@@ -24,7 +24,7 @@ const menuItemsByRole = {
     {id: "dashboard", name:"Dashboard", url: "/dashboard/recruiter", icon: LayoutDashboard},
     {id: "my-company", name: "My Company", url: "/dashboard/recruiter/my-company", icon:Building2},
     {id: "manage-jobs", name: "Manage Jobs", url: "/dashboard/recruiter/jobs", icon:PlusCircle},
-    {id: "add-job", name: "Add Job", url: "/dashboard/recruiter/new", icon:PlusCircle},
+    {id: "add-job", name: "Add Job", url: "/dashboard/recruiter/jobs/new", icon:PlusCircle},
     {id: "applications", name: "Applications", url: "/dashboard/recruiter/applications", icon:FileText},
     {id: "settings", name: "Settings", url: "/dashboard/recruiter/settings", icon:Settings},
   ],
