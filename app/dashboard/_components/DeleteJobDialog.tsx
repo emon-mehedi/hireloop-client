@@ -1,3 +1,4 @@
+'use client'
 import { Trash2Icon } from "lucide-react"
 import {
   AlertDialog,
@@ -13,10 +14,24 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { JobRow } from "../recruiter/jobs/page"
+import { deleteJob } from "@/lib/actions/jobs"
+import { useState } from "react"
 
 export function DeleteJobDialog({job}:{job:JobRow}){
+
+  //close alert dialog after clicking delete
+  const [open, setOpen]=useState(false);
+
+  const handleDelete=async()=>{
+    const res = await deleteJob(job._id);
+    console.log("Deleting id:",job._id, res);
+    if(res.deletedCount){
+      setOpen(false)
+    }
+  }
 return(
-    <AlertDialog>
+    //open trigger of alertdialog
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger
         render={<Button variant="destructive">
           <Trash2Icon/>
@@ -35,7 +50,7 @@ return(
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
+          <AlertDialogAction onClick={handleDelete} variant="destructive">Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
