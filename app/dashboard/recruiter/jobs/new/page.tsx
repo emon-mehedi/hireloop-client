@@ -10,10 +10,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { Briefcase, Calendar, MapPin } from "lucide-react"
+import { createJob } from "@/lib/actions/jobs"
 
 type JobType = "full-time" | "part-time" | "contract" | "internship"
 
-type JobFormData = {
+export type JobFormData = {
   title: string
   companyName: string
   category: string
@@ -76,6 +77,9 @@ export default function NewJobPage() {
     const jobData: JobFormData = { ...form }
     console.log("new job form data:", jobData)
     // TODO: wire into the backend (`POST /jobs` or similar).
+
+    const result =await createJob(jobData);
+    console.log("createJob result", result);
   }
 
   return (
