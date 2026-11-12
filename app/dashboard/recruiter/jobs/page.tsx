@@ -1,19 +1,17 @@
-"use client"
-
-import { useState } from "react"
 import Link from "next/link"
 
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Eye, Pencil, MoreHorizontal, Plus, Users } from "lucide-react"
 import type { JobFormData } from "@/app/dashboard/recruiter/jobs/new/page"
+import { getJobs } from "@/lib/api/jobs"
 
 // Table rows carry the same flat shape the "Post a New Job" form (JobFormData)
 // stores, plus the extra fields only the table needs.
 type JobStatus = "active" | "expired"
 
 type JobRow = JobFormData & {
-    id: string
+    _id: string
     applicants: number
     status: JobStatus
     /** Relativized post date, e.g. "Posted 4d ago". */
@@ -21,98 +19,6 @@ type JobRow = JobFormData & {
 }
 
 // Dummy data in the JobFormData shape — swap for API data later.
-const DUMMY_JOBS: JobRow[] = [
-    {
-        id: "jl-90210",
-        title: "Frontend Developer",
-        companyName: "HirePulse Network",
-        category: "Design",
-        jobType: "full-time",
-        isRemote: true,
-        location: "New York, USA",
-        deadline: "2025-05-30",
-        minSalary: "25",
-        maxSalary: "40",
-        salaryFrequency: "per hour",
-        responsibilities: "Build accessible, responsive UIs in close partnership with design.",
-        requirements: "• 3+ years React/TypeScript\nSolid CSS fundamentals",
-        applicants: 34,
-        status: "active",
-        posted: "Posted 4d ago",
-    },
-    {
-        id: "jl-88231",
-        title: "Backend Engineer",
-        companyName: "HirePulse Labs",
-        category: "Engineering & Tech",
-        jobType: "full-time",
-        isRemote: false,
-        location: "London, UK",
-        deadline: "2025-06-14",
-        minSalary: "90k",
-        maxSalary: "115k",
-        salaryFrequency: "per year",
-        responsibilities: "Design and run resilient services powering the job-matching engine.",
-        requirements: "• Node.js & MongoDB experience\nAPI design fluency",
-        applicants: 19,
-        status: "active",
-        posted: "Posted 1w ago",
-    },
-    {
-        id: "jl-99032",
-        title: "DevOps Specialist",
-        companyName: "HirePulse Platform",
-        category: "Infrastructure",
-        jobType: "full-time",
-        isRemote: false,
-        location: "Berlin, Germany",
-        deadline: "2025-06-30",
-        minSalary: "95k",
-        maxSalary: "120k",
-        salaryFrequency: "per year",
-        responsibilities: "Own CI/CD pipelines, containers, and observability tooling.",
-        requirements: "• Kubernetes in production\nIaC with Terraform",
-        applicants: 12,
-        status: "active",
-        posted: "Posted 2w ago",
-    },
-    {
-        id: "jl-44112",
-        title: "Product Marketing Lead",
-        companyName: "HirePulse Network",
-        category: "Marketing",
-        jobType: "full-time",
-        isRemote: true,
-        location: "Remote (EU/US)",
-        deadline: "2025-07-15",
-        minSalary: "80k",
-        maxSalary: "105k",
-        salaryFrequency: "per year",
-        responsibilities: "Own positioning, launches, and enablement for the platform suite.",
-        requirements: "• 5+ years B2B SaaS marketing\nTrack record of launches",
-        applicants: 27,
-        status: "active",
-        posted: "Posted 5d ago",
-    },
-    {
-        id: "jl-33208",
-        title: "QA Automation Engineer",
-        companyName: "HirePulse Platform",
-        category: "Quality",
-        jobType: "part-time",
-        isRemote: false,
-        location: "Dublin, Ireland",
-        deadline: "2025-05-01",
-        minSalary: "35",
-        maxSalary: "50",
-        salaryFrequency: "per hour",
-        responsibilities: "Automate regression suites and champion quality gates in CI.",
-        requirements: "• Playwright/Cypress expertise\nSharp eye for UX bugs",
-        applicants: 8,
-        status: "expired",
-        posted: "Posted 3w ago",
-    },
-]
 
 /** "25", "40", "per hour" → "€25 – €40 / hr" (as in the Figma rows). */
 const formatCompensation = (job: JobFormData) =>
@@ -146,10 +52,11 @@ const cellVis = {
 const headingClass = "px-3 py-3.5 text-xs font-medium tracking-wide text-white/50 uppercase"
 const cellClass = "px-3 py-3.5"
 
-export default function RecruiterJobsPage() {
-    const [jobs, setJobs] = useState<JobRow[]>(DUMMY_JOBS)
 
-    console.log("jobs data", jobs) // wire to backend fetch later
+
+export default async function RecruiterJobsPage() {
+    const jobs: JobRow[] = await getJobs();
+    console.log("jobs data", jobs)
 
     return (
         <div className="mx-auto w-full max-w-6xl px-4 py-8">
@@ -215,7 +122,7 @@ export default function RecruiterJobsPage() {
                         <tbody>
                             {jobs.map((job) => (
                                 <tr
-                                    key={job.id}
+                                    key={job._id}
                                     className="border-b border-white/5 transition-colors last:border-b-0 hover:bg-white/[0.03]"
                                 >
                                     {/* Job title & dept */}
