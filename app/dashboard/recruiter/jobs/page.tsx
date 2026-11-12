@@ -5,12 +5,13 @@ import { cn } from "@/lib/utils"
 import { Eye, Pencil, MoreHorizontal, Plus, Users } from "lucide-react"
 import type { JobFormData } from "@/app/dashboard/recruiter/jobs/new/page"
 import { getJobs } from "@/lib/api/jobs"
+import { DeleteJobDialog } from "../../_components/DeleteJobDialog"
 
 // Table rows carry the same flat shape the "Post a New Job" form (JobFormData)
 // stores, plus the extra fields only the table needs.
 type JobStatus = "active" | "expired"
 
-type JobRow = JobFormData & {
+export type JobRow = JobFormData & {
     _id: string
     applicants: number
     status: JobStatus
@@ -206,13 +207,7 @@ export default async function RecruiterJobsPage() {
                                             >
                                                 <Pencil aria-hidden className="size-4" />
                                             </button>
-                                            <button
-                                                type="button"
-                                                aria-label={`More actions for ${job.title}`}
-                                                className={cn(iconButtonClass, "hidden md:flex")}
-                                            >
-                                                <MoreHorizontal aria-hidden className="size-4" />
-                                            </button>
+                                            <DeleteJobDialog job={job}/>
                                         </div>
                                     </td>
                                 </tr>
