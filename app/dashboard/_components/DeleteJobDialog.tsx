@@ -16,17 +16,27 @@ import { Button } from "@/components/ui/button"
 import { JobRow } from "../recruiter/jobs/page"
 import { deleteJob } from "@/lib/actions/jobs"
 import { useState } from "react"
+import { toast } from "@/components/ui/toast"
+import { useRouter } from "next/navigation"
 
 export function DeleteJobDialog({job}:{job:JobRow}){
 
   //close alert dialog after clicking delete
   const [open, setOpen]=useState(false);
 
+  //refresh page after deletion
+  const router= useRouter();
+
   const handleDelete=async()=>{
     const res = await deleteJob(job._id);
     console.log("Deleting id:",job._id, res);
     if(res.deletedCount){
-      setOpen(false)
+      setOpen(false);
+      toast.add({
+            title: "Job deleted",
+            description: "Job has been permanently deleted.",
+          });
+      router.refresh()
     }
   }
 return(
