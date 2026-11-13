@@ -11,6 +11,8 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { Briefcase, Calendar, MapPin } from "lucide-react"
 import { createJob } from "@/lib/actions/jobs"
+import { toast } from "@/components/ui/toast"
+import { useRouter } from "next/navigation"
 
 type JobType = "full-time" | "part-time" | "contract" | "internship"
 
@@ -69,8 +71,10 @@ export default function NewJobPage() {
 
   const set =
     <K extends keyof JobFormData>(key: K) =>
-    (value: JobFormData[K]) =>
-      setForm((prev) => ({ ...prev, [key]: value }))
+      (value: JobFormData[K]) =>
+        setForm((prev) => ({ ...prev, [key]: value }))
+
+  const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -78,8 +82,15 @@ export default function NewJobPage() {
     console.log("new job form data:", jobData)
     // TODO: wire into the backend (`POST /jobs` or similar).
 
-    const result =await createJob(jobData);
+    const result = await createJob(jobData);
     console.log("createJob result", result);
+    if (result.insertedId) {
+      toast.add({
+        title: "Job created",
+        description: "The job has been created successfully and ready for seekers to apply",
+      });
+      router.push("/dashboard/recruiter")
+    }
   }
 
   return (
