@@ -33,7 +33,7 @@ const badgeClass =
     "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium capitalize"
 const statusStyles: Record<JobStatus, string> = {
     active: "border-emerald-400/30 bg-emerald-400/15 text-emerald-300",
-    expired: "border-white/10 bg-white/5 text-white/50",
+    expired: "border-white/10 bg-white/5 text-black/50",
 }
 const typePillClass =
     "inline-flex items-center whitespace-nowrap rounded-lg border border-white/10 bg-[#1A1A1F] px-2.5 py-0.5 text-xs capitalize text-white/80"
@@ -50,7 +50,7 @@ const cellVis = {
     deadline: "hidden lg:table-cell",
 } satisfies Record<string, string>
 
-const headingClass = "px-3 py-3.5 text-xs font-medium tracking-wide text-white/50 uppercase"
+const headingClass = "px-3 py-3.5 text-xs font-medium tracking-wide text-black/50 uppercase"
 const cellClass = "px-3 py-3.5"
 
 
@@ -63,18 +63,18 @@ export default async function RecruiterJobsPage() {
         <div className="mx-auto w-full max-w-6xl px-4 py-8">
             {/* Breadcrumb */}
             <nav className="mb-6 flex items-center gap-2 text-sm">
-                <span className="text-white/50">Manage Jobs</span>
+                <span className="text-black/50">Manage Jobs</span>
                 <span aria-hidden className="text-white/30">/</span>
-                <span className="text-white/90">Job Listings & Postings</span>
+                <span className="text-black/90">Job Listings & Postings</span>
             </nav>
 
             {/* Page heading + primary action */}
             <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
                 <div className="flex flex-col gap-1.5">
-                    <h1 className="font-heading text-[28px] leading-[1.15] font-bold tracking-[-0.02em] text-white">
+                    <h1 className="font-heading text-[28px] leading-[1.15] font-bold tracking-[-0.02em] text-black">
                         Manage Job Posts
                     </h1>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-black/60">
                         Review live listings, monitor applicants, and update job details
                         across your organization.
                     </p>
@@ -89,11 +89,11 @@ export default async function RecruiterJobsPage() {
             </header>
 
             {/* Postings table — columns collapse away on smaller screens instead of scrolling */}
-            <section className="overflow-hidden rounded-2xl border border-white/10 bg-[#101010]/95 shadow-[inset_0_3px_10px_rgba(255,255,255,0.04)]">
+            <section className="overflow-hidden rounded-2xl border border-white/10 bg-white/95 shadow-[inset_0_3px_10px_rgba(255,255,255,0.04)]">
                 <div className="overflow-x-auto">
                     <table className="table-fixed w-full text-left text-sm">
                         <thead>
-                            <tr className="border-b border-white/10">
+                            <tr className="border-b border-black/10">
                                 <th scope="col" className={cn(headingClass, "px-5", "lg:w-[20%]")}>
                                     Job title & dept
                                 </th>
@@ -139,7 +139,7 @@ export default async function RecruiterJobsPage() {
                                                 <span className="truncate font-medium text-[#EDEDEF]">
                                                     {job.title}
                                                 </span>
-                                                <span className="truncate text-xs text-white/50">
+                                                <span className="truncate text-xs text-black/50">
                                                     {job.category}
                                                 </span>
                                             </div>
@@ -150,7 +150,7 @@ export default async function RecruiterJobsPage() {
                                     <td className={cn(cellClass, cellVis.company)}>
                                         <div className="flex min-w-0 flex-col">
                                             <span className="truncate text-[#EDEDEF]">{job.companyName}</span>
-                                            <span className="truncate text-xs text-white/50">
+                                            <span className="truncate text-xs text-black/50">
                                                 {job.isRemote ? `Remote (${job.location})` : job.location}
                                             </span>
                                         </div>
@@ -162,15 +162,15 @@ export default async function RecruiterJobsPage() {
                                     </td>
                                     {/* Compensation */}
                                     <td className={cn(cellClass, cellVis.compensation)}>
-                                        <span className="whitespace-nowrap text-white/80">
+                                        <span className="whitespace-nowrap text-black/80">
                                             {formatCompensation(job)}
                                         </span>
                                     </td>
 
                                     {/* Applicants */}
                                     <td className={cn(cellClass, cellVis.applicants)}>
-                                        <span className="flex items-center gap-2 whitespace-nowrap text-white/80">
-                                            <Users aria-hidden className="size-4 text-white/40" />
+                                        <span className="flex items-center gap-2 whitespace-nowrap text-black/80">
+                                            <Users aria-hidden className="size-4 text-black/40" />
                                             {job.applicants} candidates
                                         </span>
                                     </td>
@@ -186,7 +186,7 @@ export default async function RecruiterJobsPage() {
                                     <td className={cn(cellClass, cellVis.deadline)}>
                                         <div className="flex flex-col whitespace-nowrap">
                                             <span className="text-[#EDEDEF]">{formatDeadline(job.deadline)}</span>
-                                            <span className="text-xs text-white/50">{job.posted}</span>
+                                            <span className="text-xs text-black/50">{job.posted}</span>
                                         </div>
                                     </td>
 

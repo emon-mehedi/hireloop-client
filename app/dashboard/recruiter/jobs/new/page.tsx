@@ -43,13 +43,13 @@ const JOB_TYPES: JobType[] = ["full-time", "part-time", "contract", "internship"
 const SALARY_FREQUENCIES = ["per hour", "per day", "per week", "per month", "per year"]
 
 const inputClass =
-  "bg-[#1A1A1F] border-white/10 focus-visible:border-[#5C53FE]/60 focus-visible:ring-[#5C53FE]/30 aria-invalid:border-destructive/60"
+  "bg-white border-black/10 focus-visible:border-[#5C53FE]/60 focus-visible:ring-[#5C53FE]/30 aria-invalid:border-destructive/60"
 const sectionClass =
-  "rounded-2xl border border-white/10 bg-[#101010]/95 p-6 shadow-[inset_0_3px_10px_rgba(255,255,255,0.04)]"
+  "rounded-2xl border border-white/10 bg-white/95 p-6 shadow-[inset_0_3px_10px_rgba(255,255,255,0.04)]"
 const sectionHeadingClass =
-  "mb-6 flex items-center gap-3 font-heading text-lg font-semibold tracking-[-0.02em] text-white"
+  "mb-6 flex items-center gap-3 font-heading text-lg font-semibold tracking-[-0.02em] text-black"
 const sectionBulletClass =
-  "flex size-7 items-center justify-center rounded-lg bg-[#5C53FE]/15 text-sm font-semibold text-[#8B85FF]"
+  "flex size-7 items-center justify-center rounded-lg bg-white/15 text-sm font-semibold text-[#8B85FF]"
 
 export default function NewJobPage() {
   const [form, setForm] = useState<JobFormData>({
@@ -89,10 +89,10 @@ export default function NewJobPage() {
           <p className="text-xs font-medium tracking-wide text-[#8B85FF] uppercase">
             Create New Listing
           </p>
-          <h1 className="font-heading text-[28px] leading-[1.15] font-bold tracking-[-0.02em] text-white">
+          <h1 className="font-heading text-[28px] leading-[1.15] font-bold tracking-[-0.02em] text-black">
             Post a New Job
           </h1>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-black/60">
             Fill in the position specifications to attract qualified talent across
             our network.
           </p>
@@ -131,7 +131,7 @@ export default function NewJobPage() {
                 <div className="relative">
                   <Briefcase
                     aria-hidden
-                    className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-white/50"
+                    className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-black/50"
                   />
                   <Input
                     id="companyName"
@@ -182,7 +182,7 @@ export default function NewJobPage() {
                       className={
                         "flex h-11 cursor-pointer items-center justify-center rounded-lg border text-sm capitalize transition-colors has-[input:focus-visible]:ring-2 has-[input:focus-visible]:ring-[#5C53FE]/60 " +
                         (selected
-                          ? "border-[#5C53FE] bg-[#5C53FE]/15 text-white"
+                          ? "border-[#5C53FE] bg-white/15 text-black"
                           : "border-white/10 bg-[#1A1A1F] text-white/70 hover:border-white/25 hover:text-white")
                       }
                     >
@@ -209,19 +209,19 @@ export default function NewJobPage() {
 
           <div className="flex flex-col gap-5">
             {/* Remote Work Allowed (isRemote) */}
-            <div className="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-[#1A1A1F] p-4">
+            <div className="flex items-center justify-between gap-4 rounded-lg border border-black/10 bg-white p-4">
               <div className="flex flex-col gap-1">
-                <Label htmlFor="isRemote" className="text-white/90">
+                <Label htmlFor="isRemote" className="text-black/90">
                   Remote work allowed
                 </Label>
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-black/50">
                   Enable worldwide or distributed candidate applications
                 </p>
               </div>
               <Switch
                 id="isRemote"
                 checked={form.isRemote}
-                onCheckedChange={(checked) => set("isRemote")(checked)}
+                onCheckedChange={(checked) => set("isRemote")(checked)} className="border-2 border-slate-400 bg-slate-300 data-[state=unchecked]:bg-slate-300"
               />
             </div>
 
@@ -234,7 +234,7 @@ export default function NewJobPage() {
                 <div className="relative">
                   <MapPin
                     aria-hidden
-                    className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-white/50"
+                    className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-black/50"
                   />
                   <Input
                     id="location"
@@ -246,14 +246,14 @@ export default function NewJobPage() {
                     className={`${inputClass} pl-9`}
                   />
                 </div>
-                <p className="text-xs text-white/40">Required</p>
+                <p className="text-xs text-black/40">Required</p>
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="deadline">Application deadline</Label>
                 <div className="relative">
                   <Calendar
                     aria-hidden
-                    className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-white/50"
+                    className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-black/50"
                   />
                   <Input
                     id="deadline"
@@ -359,7 +359,7 @@ export default function NewJobPage() {
         </section>
 
         <section>
-          <Button type="submit" form="new-job-form" className="bg-[#5C53FE] hover:bg-[#7B74FF]">
+          <Button type="submit" form="new-job-form" className="bg-white border-black text-black hover:bg-[#7B74FF]">
             <Briefcase aria-hidden />
             Publish Job
           </Button>
