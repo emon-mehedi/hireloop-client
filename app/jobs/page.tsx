@@ -7,7 +7,6 @@
 import { getJobs } from "@/lib/api/jobs"
 import { JobSearchBar } from "./_components/job-search-bar"
 import { JobFiltersPanel } from "./_components/job-filters-panel"
-import { Navbar } from "@/components/navbar"
 
 
 const resultsHeadingClass = "text-[22px] font-semibold tracking-[-0.02em] text-black"
