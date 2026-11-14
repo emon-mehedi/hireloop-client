@@ -2,6 +2,8 @@
 // "Public / Job Details › Header Section": logo tile, title, company
 // line, and the bookmark + Apply Now actions.
 'use client'
+import { toast } from "@/components/ui/toast";
+import { applyToAJob } from "@/lib/actions/jobs";
 import { useSession } from "@/lib/auth-client"
 import type { JobRow } from "@/lib/types/jobs"
 import { Bookmark } from "lucide-react"
@@ -13,11 +15,31 @@ export function JobHeaderCard({ job }: { job: JobRow }) {
     const user= session?.user;
     const router = useRouter();
     
-    const handleApplyNow = ()=>{
+    const handleApplyNow = async()=>{
         if(!user){
             //this will take to sign in page; after sign in, back to job details page
             router.push(`/sign-in?redirectTo=/jobs/${job._id}`);
             return
+        } else if(user.role==='seeker'){
+            const application={
+                jobId:job._id,
+                userId: user.id,
+                email: user.email,
+                jobTitle: job.title,
+                companyName: job.companyName
+            }
+
+            const result = await applyToAJob(application);
+            if(result.insertedId){
+                console.log("Application submitted successfully");
+                toast.add({
+                    title: "Job applied",
+                    description: "You have successfully appllied this job",
+                });
+                router.push('/jobs')
+            }
+        } else {
+            console.log("You must be a job seeker appllied this job");
         }
     }
     

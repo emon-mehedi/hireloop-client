@@ -1,4 +1,4 @@
-import { JobFormData } from "@/app/dashboard/recruiter/jobs/new/page";
+import { JobFormData } from "../types/jobs";
 
 const BASE_URL=process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -19,4 +19,16 @@ export const deleteJob=async (jobId:string)=>{
     method: "DELETE",
   });
   return res.json();
+}
+
+
+export async function applyToAJob(data) {
+  const res = await fetch(`${BASE_URL}/applications`,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data)
+  })
+  return res.json()
 }
