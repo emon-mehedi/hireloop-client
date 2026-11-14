@@ -1,11 +1,27 @@
 // Header card for the job details page — from the Figma
 // "Public / Job Details › Header Section": logo tile, title, company
 // line, and the bookmark + Apply Now actions.
-
+'use client'
+import { useSession } from "@/lib/auth-client"
 import type { JobRow } from "@/lib/types/jobs"
 import { Bookmark } from "lucide-react"
+import { useRouter } from "next/navigation";
 
 export function JobHeaderCard({ job }: { job: JobRow }) {
+
+    const {data:session}= useSession();
+    const user= session?.user;
+    const router = useRouter();
+    
+    const handleApplyNow = ()=>{
+        if(!user){
+            //this will take to sign in page; after sign in, back to job details page
+            router.push(`/sign-in?redirectTo=/jobs/${job._id}`);
+            return
+        }
+    }
+    
+
     return (
         <section className="flex flex-wrap items-start justify-between gap-6 border border-white/10 bg-[#141418] p-8 shadow-[0_1px_2px_rgba(0,0,0,0.35)] shadow-[inset_0_1px_rgba(255,255,255,0.035)]">
             <div className="flex min-w-0 flex-wrap items-start gap-6">
@@ -55,6 +71,7 @@ export function JobHeaderCard({ job }: { job: JobRow }) {
                 <button
                     type="button"
                     // TODO: wire the application flow.
+                    onClick={handleApplyNow}
                     className="h-12 rounded-lg bg-[#FAFAFA] px-4 text-base font-medium text-[#0B0B0C] shadow-[0_1px_2px_rgba(0,0,0,0.35)] transition-colors hover:bg-white"
                 >
                     Apply Now
