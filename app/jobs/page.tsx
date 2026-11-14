@@ -7,6 +7,8 @@
 import { getJobs } from "@/lib/api/jobs"
 import { JobSearchBar } from "./_components/job-search-bar"
 import { JobFiltersPanel } from "./_components/job-filters-panel"
+import JobCard from "./_components/job-card"
+import { JobRow } from "@/lib/types/jobs"
 
 
 const resultsHeadingClass = "text-[22px] font-semibold tracking-[-0.02em] text-black"
@@ -22,7 +24,7 @@ export default async function BrowseJobsPage({
 
     console.log("Search params:", query)
     // TODO: implement the query-param wiring from the filter UI here.
-    const jobs = await getJobs(query)
+    const jobs:JobRow[] = await getJobs(query) 
 
     return (
         <>
@@ -44,15 +46,7 @@ export default async function BrowseJobsPage({
                         {/* Job list (replaced by the Figma job card when wired) */}
                         <ul className="mt-4 flex list-none flex-col gap-3">
                             {jobs.map((job) => (
-                                <li key={job._id} className="surface-card p-6 border border-black rounded-md">
-                                    <h3 className="font-heading text-lg font-semibold text-black">
-                                        {job.title}
-                                    </h3>
-                                    <p className="mt-1 text-sm text-[#6E6E78]">
-                                        {job.companyName} • {job.location}
-                                        {job.isRemote ? " (Remote)" : ""}
-                                    </p>
-                                </li>
+                                <JobCard key={job._id} job={job}/>
                             ))}
                             {jobs.length === 0 ? (
                                 <li className="surface-card p-10 text-center text-sm text-[#6E6E78]">
