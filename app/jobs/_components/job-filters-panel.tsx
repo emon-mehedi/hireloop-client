@@ -29,8 +29,9 @@ export function JobFiltersPanel({ jobs }: { jobs: readonly JobRow[] }) {
 
             <div className="mt-7 flex flex-col gap-6">
                 <FilterChecklist
+                    //name="jobType" must match req.query.jobType in backend
                     legend="Job Type"
-                    name="type"
+                    name="jobType"
                     multiple={false}
                     options={countOptions((job) => job.jobType, JOB_TYPES, jobs)}
                 />
@@ -42,7 +43,7 @@ export function JobFiltersPanel({ jobs }: { jobs: readonly JobRow[] }) {
                 />
                 <FilterChecklist
                     legend="Work Arrangement"
-                    name="remote"
+                    name="isRemote"
                     options={[
                         { value: "remote", label: "Remote only", count: jobs.filter((job) => job.isRemote).length },
                     ]}

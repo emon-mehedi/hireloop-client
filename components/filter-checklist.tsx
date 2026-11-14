@@ -5,8 +5,9 @@
 // toggle visually on click and nothing else. No URL/query updates
 // happen here — wrap them in one GET form and read `FormData` when
 // implementing server-side filtering.
-
+'use client'
 import { Check } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export type FilterOption = {
     value: string
@@ -31,8 +32,15 @@ export function FilterChecklist({
     /** Option values checked on first render. */
     defaultValue?: readonly string[]
 }) {
+    const router = useRouter();
     const inputType = multiple ? "checkbox" : "radio"
-
+    const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
+        console.log(name, event.target.value);
+        //this creates a new search params merging with previous params
+        const params = new URLSearchParams();
+        params.set(name,event.target.value);
+        router.push(`/jobs?${params.toString()}`)
+    }
     return (
         <fieldset className="flex flex-col gap-2">
             <legend className="text-base font-semibold tracking-[-0.02em] text-black">
@@ -50,6 +58,7 @@ export function FilterChecklist({
                             value={option.value}
                             defaultChecked={defaultValue.includes(option.value)}
                             className="sr-only peer"
+                            onChange={handleCheckBoxChange}
                         />
                         <span
                             aria-hidden

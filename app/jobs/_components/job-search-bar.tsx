@@ -22,7 +22,7 @@ export function JobSearchBar() {
         console.log(data);
         const search = data.searchField;
 
-        //make a search param
+        //make a search param merging with previous serach params
         const params = new URLSearchParams();
         //set the search param('search' same as req.query.search in backend)
         params.set('search', search as string);
