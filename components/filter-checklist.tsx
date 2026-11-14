@@ -37,7 +37,7 @@ export function FilterChecklist({
     const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
         console.log(name, event.target.value);
         //this creates a new search params merging with previous params
-        const params = new URLSearchParams();
+        const params = new URLSearchParams(window.location.search);
         params.set(name,event.target.value);
         router.push(`/jobs?${params.toString()}`)
     }
