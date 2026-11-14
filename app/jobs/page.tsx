@@ -10,7 +10,7 @@ import { JobFiltersPanel } from "./_components/job-filters-panel"
 import { Navbar } from "@/components/navbar"
 
 
-const resultsHeadingClass = "text-[22px] font-semibold tracking-[-0.02em] text-[#EDEDEF]"
+const resultsHeadingClass = "text-[22px] font-semibold tracking-[-0.02em] text-black"
 
 export default async function BrowseJobsPage({
     searchParams,
@@ -27,8 +27,6 @@ export default async function BrowseJobsPage({
 
     return (
         <>
-            <Navbar />
-
             <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
                 {/* Search & primary action */}
                 <JobSearchBar />
@@ -47,8 +45,8 @@ export default async function BrowseJobsPage({
                         {/* Job list (replaced by the Figma job card when wired) */}
                         <ul className="mt-4 flex list-none flex-col gap-3">
                             {jobs.map((job) => (
-                                <li key={job._id} className="surface-card p-6">
-                                    <h3 className="font-heading text-lg font-semibold text-[#EDEDEF]">
+                                <li key={job._id} className="surface-card p-6 border border-black rounded-md">
+                                    <h3 className="font-heading text-lg font-semibold text-black">
                                         {job.title}
                                     </h3>
                                     <p className="mt-1 text-sm text-[#6E6E78]">

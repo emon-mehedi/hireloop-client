@@ -35,14 +35,14 @@ export function FilterChecklist({
 
     return (
         <fieldset className="flex flex-col gap-2">
-            <legend className="text-base font-semibold tracking-[-0.02em] text-[#EDEDEF]">
+            <legend className="text-base font-semibold tracking-[-0.02em] text-black">
                 {legend}
             </legend>
             <div className="flex flex-col gap-1">
                 {options.map((option) => (
                     <label
                         key={option.value}
-                        className="flex cursor-pointer items-center gap-3 py-1 text-[13px] font-medium text-[#A0A0AB] transition-colors capitalize hover:text-[#EDEDEF] has-[:checked]:text-[#EDEDEF]"
+                        className="flex cursor-pointer items-center gap-3 py-1 text-[13px] font-medium text-[#A0A0AB] transition-colors capitalize hover:text-black has-[:checked]:text-black"
                     >
                         <input
                             type={inputType}

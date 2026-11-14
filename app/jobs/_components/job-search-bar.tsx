@@ -33,10 +33,10 @@ export function JobSearchBar() {
                     name="q"
                     aria-label="Search jobs"
                     placeholder="Search by job title, keywords..."
-                    className="surface-field h-12 w-full pr-3 pl-10 text-sm text-[#EDEDEF] placeholder:text-[#A0A0AB]"
+                    className="surface-field h-12 w-full pr-3 pl-10 text-sm text-black placeholder:text-[#A0A0AB]"
                 />
             </div>
-            <button type="submit" className={cn(buttonVariants(), "bg-white text-[#2F3131] hover:bg-white/90 sm:h-12")}>
+            <button type="submit" className={cn(buttonVariants(), "border border-black bg-black text-white hover:bg-white/90 hover:text-black sm:h-12")}>
                 Search Jobs
             </button>
         </form>

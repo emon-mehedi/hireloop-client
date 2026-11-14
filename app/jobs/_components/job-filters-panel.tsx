@@ -25,7 +25,7 @@ const countOptions = (
 export function JobFiltersPanel({ jobs }: { jobs: readonly JobRow[] }) {
     return (
         <section className="surface-card p-6">
-            <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-[#EDEDEF]">Filters</h2>
+            <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-black">Filters</h2>
 
             <div className="mt-7 flex flex-col gap-6">
                 <FilterChecklist
