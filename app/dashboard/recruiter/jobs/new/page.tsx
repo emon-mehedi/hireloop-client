@@ -13,36 +13,8 @@ import { Briefcase, Calendar, MapPin } from "lucide-react"
 import { createJob } from "@/lib/actions/jobs"
 import { toast } from "@/components/ui/toast"
 import { useRouter } from "next/navigation"
+import { JOB_CATEGORIES, JOB_TYPES, JobFormData, JobType, SALARY_FREQUENCIES } from "@/lib/Types/jobs"
 
-type JobType = "full-time" | "part-time" | "contract" | "internship"
-
-export type JobFormData = {
-  title: string
-  companyName: string
-  category: string
-  jobType: JobType
-  isRemote: boolean
-  location: string
-  deadline: string
-  minSalary: string
-  maxSalary: string
-  salaryFrequency: string
-  responsibilities: string
-  requirements: string
-}
-
-const JOB_CATEGORIES = [
-  "Engineering & Tech",
-  "Design",
-  "Product",
-  "Marketing",
-  "Infrastructure",
-  "Quality",
-]
-
-const JOB_TYPES: JobType[] = ["full-time", "part-time", "contract", "internship"]
-
-const SALARY_FREQUENCIES = ["per hour", "per day", "per week", "per month", "per year"]
 
 const inputClass =
   "bg-white border-black/10 focus-visible:border-[#5C53FE]/60 focus-visible:ring-[#5C53FE]/30 aria-invalid:border-destructive/60"
