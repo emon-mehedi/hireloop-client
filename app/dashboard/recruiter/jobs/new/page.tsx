@@ -13,7 +13,7 @@ import { Briefcase, Calendar, MapPin } from "lucide-react"
 import { createJob } from "@/lib/actions/jobs"
 import { toast } from "@/components/ui/toast"
 import { useRouter } from "next/navigation"
-import { JOB_CATEGORIES, JOB_TYPES, JobFormData, JobType, SALARY_FREQUENCIES } from "@/lib/Types/jobs"
+import { JOB_CATEGORIES, JOB_TYPES, JobFormData, JobType, SALARY_FREQUENCIES } from "@/lib/types/jobs"
 
 
 const inputClass =

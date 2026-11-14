@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Eye, Pencil, MoreHorizontal, Plus, Users } from "lucide-react"
 import { getJobs } from "@/lib/api/jobs"
 import { DeleteJobDialog } from "../../_components/DeleteJobDialog"
-import { JobFormData, JobRow, JobStatus } from "@/lib/Types/jobs"
+import { JobFormData, JobRow, JobStatus } from "@/lib/types/jobs"
 
 
 
