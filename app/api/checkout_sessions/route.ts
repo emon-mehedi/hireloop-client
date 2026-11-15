@@ -22,12 +22,12 @@ export async function POST() {
       // Provide a name (for example, hosted_web_0001) to label this Checkout integration and measure its conversion independently
       integration_identifier: '{{INTEGRATION_ID}}',
     });
-    return NextResponse.redirect(session.url, 303)
+    return NextResponse.redirect(session.url as string, 303)
   } catch (err) {
-    
+    const error = err instanceof Error ? err : new Error(String(err))
     return NextResponse.json(
-      { error: err.message },
-      { status: err.statusCode || 500 }
+      { error: error.message },
+      { status: 500 }
     )
   }
 }
