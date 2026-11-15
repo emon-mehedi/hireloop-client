@@ -10,7 +10,6 @@
 
 import Link from "next/link"
 import { ArrowLeft, CreditCard, Lock } from "lucide-react"
-import { PayButton } from "./_components/pay-button"
 
 const ORDER = {
     name: "Hireloop Pro Plan",
@@ -23,7 +22,11 @@ const borderClass = "border-[#2e2e33]"
 const mutedClass = "text-[#a1a1aa]"
 const dimmedClass = "text-[#808089]"
 
-export default function CheckoutPage() {
+export default async function CheckoutPage({searchParams}:{searchParams: Promise<{canceled?:string}>}) {
+    const {canceled} =await searchParams
+    if(canceled){
+        console.log("Order canceled -- continue to shop around and check out when you\'re ready")
+    }
     return (
         <div className="min-w-0">
             {/* Minimal header like the Figma checkout top bar: brand only. */}
@@ -89,7 +92,15 @@ export default function CheckoutPage() {
 
                     <div className="mt-8">
                         {/* TODO: wire the Stripe Checkout Session redirect (pay-button). */}
-                        <PayButton label={`Pay ${ORDER.amount}`} />
+                        <form action="/api/checkout_sessions" method="POST">
+                            <section>
+                                <button type="submit" role="link"
+                                    className="h-[60px] w-full rounded-lg bg-[#0070E0] text-lg font-bold text-white shadow-[0_4px_6px_-4px_rgba(94,158,246,0.3),0_10px_15px_-3px_rgba(94,158,246,0.3)] transition-colors hover:bg-[#3F90E5]"
+                                >
+                                Checkout {ORDER.amount}
+                                </button>
+                            </section>
+                        </form>
                         <p className={`mt-4 flex items-center justify-center gap-1.5 text-xs ${dimmedClass}`}>
                             <Lock aria-hidden className="size-3.5" />
                             Powered by Stripe
