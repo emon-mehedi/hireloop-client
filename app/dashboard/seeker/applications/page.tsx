@@ -6,12 +6,19 @@
 
 import { PageContainer } from "@/components/dashboard/page-shell"
 import { ApplicationsBoard } from "./_components/applications-board"
-import { DUMMY_APPLICATIONS } from "./_dummy-data"
+import { getApplications } from "@/lib/api/applications"
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-export default function MyApplicationsPage() {
+export default async function MyApplicationsPage() {
+
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+    const applications = await getApplications(`applicantId=${session?.user.id}`);
     return (
         <PageContainer>
-            <ApplicationsBoard applications={DUMMY_APPLICATIONS} />
+            <ApplicationsBoard applications={applications} />
         </PageContainer>
     )
 }
