@@ -11,6 +11,12 @@ export const getApplications = async (query = ""): Promise<ApplicationRow[]> => 
     return res.json()
 }
 
+//function to get count of applications of a user
+export const getApplicationsCount = async (query = ""): Promise<{count: number}> => {
+    const res = await fetch(`${BASE_URL}/applications/count?${query}`)
+    return res.json()
+}
+
 export const createApplication = async (data: ApplicationFormData) => {
     const res = await fetch(`${BASE_URL}/applications`, {
         method: "POST",

@@ -4,6 +4,7 @@
 'use client'
 import { toast } from "@/components/ui/toast";
 import { applyToAJob } from "@/lib/actions/jobs";
+import { getApplicationsCount } from "@/lib/api/applications";
 import { useSession } from "@/lib/auth-client"
 import type { JobRow } from "@/lib/types/jobs"
 import { Bookmark } from "lucide-react"
@@ -21,25 +22,46 @@ export function JobHeaderCard({ job }: { job: JobRow }) {
             router.push(`/sign-in?redirectTo=/jobs/${job._id}`);
             return
         } else if(user.role==='seeker'){
-            const application={
-                jobId:job._id,
+                //number of jobs applied by this user
+            const countResult = await getApplicationsCount(`applicantId=${user.id}`);
+                //count is more than 10 and and not a premium user
+            if(countResult.count >=10){
+                router.push('/payment');
+                return
+            } else {
+
+                
+                const application={
+                jobId: job._id,
                 userId: user.id,
                 email: user.email,
                 jobTitle: job.title,
-                companyName: job.companyName
+                companyName: job.companyName,
+                jobType: job.jobType,
+                isRemote: job.isRemote,
+                location: job.location,
+                minSalary: job.minSalary,
+                maxSalary: job.maxSalary,
+                salaryFrequency: job.salaryFrequency,
+                deadline: job.deadline,
+                appliedAt: new Date().toISOString(),
+                status: "applied",
+                archived: false,
+                }
+                
+                const result = await applyToAJob(application);
+                if(result.insertedId){
+                    console.log("Application submitted successfully");
+                    toast.add({
+                        title: "Job applied",
+                        description: "You have successfully appllied this job",
+                    });
+                    router.push('/jobs')
+                }
             }
 
-            const result = await applyToAJob(application);
-            if(result.insertedId){
-                console.log("Application submitted successfully");
-                toast.add({
-                    title: "Job applied",
-                    description: "You have successfully appllied this job",
-                });
-                router.push('/jobs')
-            }
         } else {
-            console.log("You must be a job seeker appllied this job");
+            console.log("You must be a job seeker to apply this job");
         }
     }
     
