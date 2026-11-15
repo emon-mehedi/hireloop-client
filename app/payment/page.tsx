@@ -35,7 +35,7 @@ export default function CheckoutPage() {
                 >
                     <ArrowLeft aria-hidden className="size-6" />
                 </Link>
-                <Link href="/" className="font-heading text-lg font-bold text-white">
+                <Link href="/" className="font-heading text-lg font-bold text-black">
                     Hireloop
                 </Link>
             </header>
@@ -49,19 +49,19 @@ export default function CheckoutPage() {
 
                     <div className="mt-7 flex items-start justify-between gap-4 border-b pb-8 border-[#2e2e33]">
                         <div>
-                            <h2 className="text-lg font-semibold leading-7 text-white">
+                            <h2 className="text-lg font-semibold leading-7 text-black">
                                 {ORDER.name}
                             </h2>
                             <p className={`mt-1.5 text-sm ${mutedClass}`}>
                                 {ORDER.description}
                             </p>
                         </div>
-                        <p className="whitespace-nowrap text-lg font-semibold leading-7 text-white">
+                        <p className="whitespace-nowrap text-lg font-semibold leading-7 text-black">
                             {ORDER.amount}
                         </p>
                     </div>
 
-                    <div className="mt-4 flex items-center justify-between text-lg font-semibold text-white">
+                    <div className="mt-4 flex items-center justify-between text-lg font-semibold text-black">
                         <span>Total</span>
                         <span className="whitespace-nowrap">{ORDER.amount}</span>
                     </div>
@@ -69,7 +69,7 @@ export default function CheckoutPage() {
 
                 {/* Payment */}
                 <section>
-                    <h2 className="text-sm font-semibold text-white">Payment method</h2>
+                    <h2 className="text-sm font-semibold text-black">Payment method</h2>
 
                     <div className={`mt-7 overflow-hidden rounded-lg border ${borderClass}`}>
                         {/* Card method header — the real form fields come from
