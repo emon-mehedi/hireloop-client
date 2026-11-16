@@ -14,6 +14,7 @@ import { createJob } from "@/lib/actions/jobs"
 import { toast } from "@/components/ui/toast"
 import { useRouter } from "next/navigation"
 import { JOB_CATEGORIES, JOB_TYPES, JobFormData, JobType, SALARY_FREQUENCIES } from "@/lib/types/jobs"
+import { useSession } from "@/lib/auth-client"
 
 
 const inputClass =
@@ -26,9 +27,12 @@ const sectionBulletClass =
   "flex size-7 items-center justify-center rounded-lg bg-white/15 text-sm font-semibold text-[#8B85FF]"
 
 export default function NewJobPage() {
+
+  const {data:session}= useSession();
   const [form, setForm] = useState<JobFormData>({
     title: "",
     companyName: "",
+    recruiterId: session?.user.id??"", 
     category: "",
     jobType: "full-time",
     isRemote: false,

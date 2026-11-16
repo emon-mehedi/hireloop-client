@@ -1,6 +1,7 @@
 export type JobFormData = {
   title: string
   companyName: string
+  recruiterId: string
   category: string
   jobType: JobType
   isRemote: boolean

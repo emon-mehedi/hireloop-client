@@ -6,6 +6,7 @@ import { Eye, Pencil, MoreHorizontal, Plus, Users } from "lucide-react"
 import { getJobs } from "@/lib/api/jobs"
 import { DeleteJobDialog } from "../../_components/DeleteJobDialog"
 import { JobFormData, JobRow, JobStatus } from "@/lib/types/jobs"
+import { getSession } from "@/lib/core/server"
 
 
 
@@ -47,7 +48,8 @@ const cellClass = "px-3 py-3.5"
 
 
 export default async function RecruiterJobsPage() {
-    const jobs: JobRow[] = await getJobs();
+    const session = await getSession();
+    const jobs: JobRow[] = await getJobs(`recruiterId=${session?.user.id}`);
     console.log("jobs data", jobs)
 
     return (
