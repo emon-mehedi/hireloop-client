@@ -1,3 +1,4 @@
+import { checkoutVerify } from '@/lib/actions/payments'
 import { stripe } from '@/lib/stripe'
 import { redirect } from 'next/navigation'
 
@@ -24,6 +25,9 @@ export default async function CheckoutSuccessPage({ searchParams }:{searchParams
 
   if (status === 'complete' && payment_status=== 'paid') {
     console.log({status, customer_email, metadata, payment_intent, payment_status});
+
+    const result = await checkoutVerify(session_id)
+    console.log({ result })
 
     return (
       <section id="success">
