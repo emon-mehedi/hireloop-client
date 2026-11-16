@@ -129,7 +129,7 @@ export default async function RecruiterJobsPage() {
                                                 {job.title.charAt(0)}
                                             </span>
                                             <div className="flex min-w-0 flex-col">
-                                                <span className="truncate font-medium text-[#EDEDEF]">
+                                                <span className="truncate font-medium text-black">
                                                     {job.title}
                                                 </span>
                                                 <span className="truncate text-xs text-black/50">
@@ -142,7 +142,7 @@ export default async function RecruiterJobsPage() {
                                     {/* Company & location */}
                                     <td className={cn(cellClass, cellVis.company)}>
                                         <div className="flex min-w-0 flex-col">
-                                            <span className="truncate text-[#EDEDEF]">{job.companyName}</span>
+                                            <span className="truncate text-black">{job.companyName}</span>
                                             <span className="truncate text-xs text-black/50">
                                                 {job.isRemote ? `Remote (${job.location})` : job.location}
                                             </span>
@@ -178,7 +178,7 @@ export default async function RecruiterJobsPage() {
                                     {/* Deadline */}
                                     <td className={cn(cellClass, cellVis.deadline)}>
                                         <div className="flex flex-col whitespace-nowrap">
-                                            <span className="text-[#EDEDEF]">{formatDeadline(job.deadline)}</span>
+                                            <span className="text-black">{formatDeadline(job.deadline)}</span>
                                             <span className="text-xs text-black/50">{job.posted}</span>
                                         </div>
                                     </td>
