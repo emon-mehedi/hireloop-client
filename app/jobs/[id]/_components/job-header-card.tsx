@@ -5,6 +5,7 @@
 import { toast } from "@/components/ui/toast";
 import { applyToAJob } from "@/lib/actions/jobs";
 import { getApplicationsCount } from "@/lib/api/applications";
+import { getUserPremiumById } from "@/lib/api/user";
 import { useSession } from "@/lib/auth-client"
 import type { JobRow } from "@/lib/types/jobs"
 import { Bookmark } from "lucide-react"
@@ -22,10 +23,13 @@ export function JobHeaderCard({ job }: { job: JobRow }) {
             router.push(`/sign-in?redirectTo=/jobs/${job._id}`);
             return
         } else if(user.role==='seeker'){
+                //is user premium?
+            const premiumResult = await getUserPremiumById(user.id)
+            console.log("Premimum result", premiumResult);
                 //number of jobs applied by this user
             const countResult = await getApplicationsCount(`applicantId=${user.id}`);
                 //count is more than 10 and and not a premium user
-            if(countResult.count >=10){
+            if(!premiumResult.premium && countResult.count >=10){
                 router.push('/payment');
                 return
             } else {
