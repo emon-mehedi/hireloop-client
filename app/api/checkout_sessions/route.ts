@@ -2,8 +2,13 @@ import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 
 import { stripe } from '../../../lib/stripe'
+import { auth } from '@/lib/auth'
 
 export async function POST() {
+  const userSession = await auth.api.getSession({
+          headers: await headers()
+      })
+
   try {
     const headersList = await headers()
     const origin = headersList.get('origin')
@@ -18,6 +23,7 @@ export async function POST() {
         },
       ],
       mode: 'payment',
+      customer_email: userSession?.user.email,
       success_url: `${origin}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       // Provide a name (for example, hosted_web_0001) to label this Checkout integration and measure its conversion independently
       integration_identifier: 'hireloop_web_001',
