@@ -2,7 +2,7 @@ import Link from "next/link"
 
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Eye, Pencil, MoreHorizontal, Plus, Users } from "lucide-react"
+import { Eye, Pencil, MoreHorizontal, Plus, Users, FileText } from "lucide-react"
 import { getJobs } from "@/lib/api/jobs"
 import { DeleteJobDialog } from "../../_components/DeleteJobDialog"
 import { JobFormData, JobRow, JobStatus } from "@/lib/types/jobs"
@@ -186,6 +186,13 @@ export default async function RecruiterJobsPage() {
                                     {/* Actions */}
                                     <td className={cn(cellClass, "px-5")}>
                                         <div className="flex items-center gap-1">
+                                                                                        <Link
+                                                href={`/dashboard/recruiter/jobs/${job._id}/applications`}
+                                                aria-label={`View applications for ${job.title}`}
+                                                className={iconButtonClass}
+                                            >
+                                                <FileText aria-hidden className="size-4" />
+                                            </Link>
                                             <button
                                                 type="button"
                                                 aria-label={`View ${job.title}`}
