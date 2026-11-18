@@ -21,12 +21,7 @@ export const deleteJob=async (jobId:string)=>{
 
 
 export async function applyToAJob(data) {
-  const res = await fetch(`${BASE_URL}/applications`,{
-    method: "POST",
-    headers:{
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data)
-  })
+  const api = `${BASE_URL}/applications`;
+  const res = await protectedMutation(api, "POST", data)
   return res.json()
 }
