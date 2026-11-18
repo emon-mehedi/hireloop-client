@@ -22,7 +22,7 @@ export default async function AdminUsersPage() {
     const users = Array.isArray(result) ? result : result.users
 
     const rows: UserRow[] = (users ?? []).map((user) => ({
-        id: user.id,
+        id: user._id,
         name: user.name,
         email: user.email,
         role: toUserRole(user.role),
