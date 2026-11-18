@@ -9,10 +9,10 @@
 import { notFound } from "next/navigation"
 import { PageContainer, PageHeader } from "@/components/dashboard/page-shell"
 import { getJobs } from "@/lib/api/jobs"
-import { getApplications } from "@/lib/api/applications"
 import type { ApplicationRow } from "@/lib/types/applications"
 import { ApplicationsReviewTable } from "./_components/applications-review-table"
 import { JobRow } from "@/lib/types/jobs"
+import { getApplications } from "@/lib/api/applications-server"
 
 export default async function JobApplicationsPage({
     params,
