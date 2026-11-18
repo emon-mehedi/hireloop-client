@@ -1,3 +1,5 @@
+"use server";
+
 // Data-access module for the applications API (Express on :5000).
 // Follows the `lib/api/jobs.ts` pattern.
 

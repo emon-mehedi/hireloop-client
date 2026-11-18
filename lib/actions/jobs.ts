@@ -1,3 +1,5 @@
+"use server";
+
 import { protectedMutation } from "../core/server";
 import { JobFormData } from "../types/jobs";
 

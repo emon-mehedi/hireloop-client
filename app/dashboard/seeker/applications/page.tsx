@@ -6,9 +6,9 @@
 
 import { PageContainer } from "@/components/dashboard/page-shell"
 import { ApplicationsBoard } from "./_components/applications-board"
-import { getApplications } from "@/lib/api/applications"
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { getApplications } from "@/lib/api/applications-server";
 
 export default async function MyApplicationsPage() {
 
